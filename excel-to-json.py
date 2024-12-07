@@ -54,9 +54,9 @@ def update_nested_key(data, key, value):
     Returns True if the value was updated, False otherwise.
     """
     keys = key.split('.')
-    for k in keys[:-1]:
-        data = data.setdefault(k, {})
-    if data.get(keys[-1]) != value:  # Update only if the value is different
+    for k in keys[:-1]: # Iterates over all parts of the key except the last one.
+        data = data.setdefault(k, {}) # if key does not exist yet, add it and set it equal to {}, so: {'key': {}}
+    if data.get(keys[-1]) != value:  # Update value of last key only if the value is different
         data[keys[-1]] = value
         return True
     return False
