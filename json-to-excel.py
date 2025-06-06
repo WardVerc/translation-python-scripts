@@ -162,9 +162,19 @@ def main():
         print("💡 Please fix them manually before exporting.")
         return
 
-    # Step 5: Compare with Excel and export
-    excel_data = load_excel_translations(EXCEL_OLD_TRANSLATIONS)
-    old_keys = set(excel_data.keys())
+    # Step 5: Load Excel if it exists
+    if os.path.exists(EXCEL_OLD_TRANSLATIONS):
+        excel_data = load_excel_translations(EXCEL_OLD_TRANSLATIONS)
+        old_keys = set(excel_data.keys())
+    else:
+        print(f"⚠️ Excel file not found at {EXCEL_OLD_TRANSLATIONS}")
+        confirm = input("Proceed assuming ALL keys are new? (y/n): ").strip().lower()
+        if confirm != "y":
+            print("❌ Aborted.")
+            return
+        old_keys = set()
+
+    # Step 6: Prepare data for export
     full_translation_set = {
         key: {
             "EN": flattened_jsons["EN"][key],
@@ -177,7 +187,7 @@ def main():
         key: full_translation_set[key] for key in all_keys if key not in old_keys
     }
 
-    # Step 6: Export Excel files
+    # Step 7: Export Excel files
     ts = timestamp()
     write_excel(new_keys_only, f"/Users/wardvercruyssen/Downloads/new-keys-ONLY-{ts}.xlsx", "New Keys Only")
     write_excel(full_translation_set, f"/Users/wardvercruyssen/Downloads/all-keys-MERGED-{ts}.xlsx", "All Keys Merged")
