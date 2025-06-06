@@ -1,0 +1,82 @@
+#!/bin/bash
+
+SCRIPTS=(
+  "json-to-excel.py"
+  "excel-to-json.py"
+  "flatten-json.py"
+)
+
+SCRIPT_LABELS=(
+  "Compare and export translations (json-to-excel)"
+  "Import edited Excel and update translations (excel-to-json)"
+  "Flatten nested JSON (flatten-json)"
+)
+
+# Step 0: Ensure .env exists
+if [ ! -f .env ]; then
+  echo "❌ .env file not found!"
+  echo "Please create a .env file with your DeepL key:"
+  echo "DEEPL_FREE_SECRET=your-api-key"
+  exit 1
+fi
+
+# Step 1: Set up virtualenv if missing
+if [ ! -d .venv ]; then
+  echo "🐍 Creating virtual environment..."
+  python3 -m venv .venv
+fi
+
+# Step 2: Activate and install dependencies
+source .venv/bin/activate
+pip3 install --quiet -r requirements.txt
+
+clear
+echo "👋 Hi! I have a few scripts ready for you. Choose a script and I will set it up for you!"
+echo
+
+while true; do
+  for i in "${!SCRIPT_LABELS[@]}"; do
+    echo "$((i+1)). ${SCRIPT_LABELS[$i]}"
+  done
+
+  echo -n $'\n'"👉 Enter the number of the script you want to run: "
+  read choice
+
+  script_index=$((choice - 1))
+  selected_script="${SCRIPTS[$script_index]}"
+
+  if [ -z "$selected_script" ] || [ ! -f "$selected_script" ]; then
+    echo "❌ Invalid choice. Please try again."
+    continue
+  fi
+
+  echo
+  echo "🎯 Aha! Running: ${SCRIPT_LABELS[$script_index]}"
+  echo
+
+  # Custom prompt for json-to-excel
+  if [[ "$selected_script" == "json-to-excel.py" ]]; then
+    echo -n "📄 Is the existing Excel file still 'translations.xlsx' in your Downloads folder? (y/n): "
+    read confirm
+    if [[ "$confirm" != "y" ]]; then
+      echo "🛑 Please update the script paths before running. Exiting."
+      break
+    fi
+  fi
+
+  # Run selected script
+  echo "🚀 Launching script: $selected_script"
+  echo
+  .venv/bin/python "$selected_script"
+
+  echo
+  echo -n "🔁 Do you want to run another script? (y/n): "
+  read again
+
+  if [[ "$again" != "y" ]]; then
+    echo "👋 Okay bye bye!"
+    break
+  fi
+
+  echo
+done
