@@ -12,10 +12,23 @@ DEEPL_API_KEY = os.getenv("DEEPL_FREE_SECRET")
 
 # --- HARDCODED PATHS ---
 EXCEL_OLD_TRANSLATIONS = "/Users/wardvercruyssen/Downloads/translations.xlsx"
-JSON_PATHS = {
-    "EN": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/en.json",
-    "FR": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/fr.json",
-    "NL": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/nl.json",
+TRANSLATION_SETS = {
+    "1": {
+        "label": "MobilityPlus Portal",
+        "paths": {
+            "EN": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/en.json",
+            "FR": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/fr.json",
+            "NL": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/nl.json",
+        },
+    },
+    "2": {
+        "label": "Synkee Portal",
+        "paths": {
+            "EN": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/en.json",
+            "FR": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/fr.json",
+            "NL": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/nl.json",
+        },
+    },
 }
 
 # --- HELPER FUNCTIONS ---
@@ -37,7 +50,6 @@ def load_excel_translations(path):
     header = [cell.value for cell in ws[1]]
     lang_map = {col: header.index(col) for col in ["Key", "EN", "FR", "NL"]}
     translations = {}
-
     for row in ws.iter_rows(min_row=2, values_only=True):
         key = row[lang_map["Key"]]
         translations[key] = {
@@ -101,9 +113,20 @@ def translate_text(text, target_lang, failed_keys=None, key_name=None):
         return ""
 
 # --- MAIN SCRIPT ---
-
 def main():
     print("🚀 Starting translation validation and export...")
+
+    # Ask user which translation set to use
+    print("📁 Which translation set do you want to use?")
+    for key, value in TRANSLATION_SETS.items():
+        print(f" {key}. {value['label']}")
+
+    selection = input("Enter number: ").strip()
+    if selection not in TRANSLATION_SETS:
+        print("❌ Invalid selection.")
+        return
+
+    JSON_PATHS = TRANSLATION_SETS[selection]["paths"]
 
     # Step 1: Load JSONs and collect all keys
     flattened_jsons = {lang: load_json(path) for lang, path in JSON_PATHS.items()}

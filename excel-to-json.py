@@ -8,11 +8,24 @@ from datetime import datetime
 load_dotenv()
 
 # --- HARDCODED PATHS ---
-EXCEL_REVIEWED_PATH = "/Users/wardvercruyssen/Downloads/new-keys-ONLY-reviewed.xlsx"
-JSON_PATHS = {
-    "EN": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/en.json",
-    "FR": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/fr.json",
-    "NL": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/nl.json",
+EXCEL_REVIEWED_PATH = "/Users/wardvercruyssen/Downloads/translations-reviewed.xlsx"
+TRANSLATION_SETS = {
+    "1": {
+        "label": "MobilityPlus Portal",
+        "paths": {
+            "EN": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/en.json",
+            "FR": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/fr.json",
+            "NL": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/nl.json",
+        },
+    },
+    "2": {
+        "label": "Synkee Portal",
+        "paths": {
+            "EN": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/en.json",
+            "FR": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/fr.json",
+            "NL": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/nl.json",
+        },
+    },
 }
 
 # --- HELPER FUNCTIONS ---
@@ -64,16 +77,25 @@ def write_excel(translations_dict, path, title):
 def main():
     print("🚀 Starting import of reviewed translations...")
 
-    # Ensure the reviewed file is named correctly
-    if not EXCEL_REVIEWED_PATH.endswith("new-keys-ONLY-reviewed.xlsx"):
-        print("❌ The reviewed Excel file must be named 'new-keys-ONLY-reviewed.xlsx'. Rename it and try again.")
+    if not EXCEL_REVIEWED_PATH.endswith("translations-reviewed.xlsx"):
+        print("❌ The reviewed Excel file must be named 'translations-reviewed.xlsx'. Rename it and try again.")
         return
 
-    # Check if file exists
     if not os.path.exists(EXCEL_REVIEWED_PATH):
         print(f"❌ File not found: {EXCEL_REVIEWED_PATH}")
         print("💡 Please make sure the file exists and is named correctly.")
         return
+
+    # Ask which translation set to use
+    print("📁 Which translation set do you want to use?")
+    for key, value in TRANSLATION_SETS.items():
+        print(f" {key}. {value['label']}")
+    selection = input("Enter number: ").strip()
+    if selection not in TRANSLATION_SETS:
+        print("❌ Invalid selection.")
+        return
+
+    JSON_PATHS = TRANSLATION_SETS[selection]["paths"]
 
     reviewed_data = load_excel(EXCEL_REVIEWED_PATH)
     jsons = {lang: load_json(path) for lang, path in JSON_PATHS.items()}
@@ -87,7 +109,6 @@ def main():
             if old_val != new_val and new_val:
                 changes[lang][key] = new_val
 
-    # Show summary before saving
     for lang in ["EN", "FR", "NL"]:
         if changes[lang]:
             print(f"\n🔄 {lang} - {len(changes[lang])} updates:")
@@ -99,12 +120,10 @@ def main():
         print("❌ Operation cancelled.")
         return
 
-    # Apply changes and save
     for lang in ["EN", "FR", "NL"]:
         jsons[lang].update(changes[lang])
         save_json(JSON_PATHS[lang], jsons[lang])
 
-    # Export full Excel for records
     all_keys = set().union(*[jsons[lang].keys() for lang in ["EN", "FR", "NL"]])
     full_export = {
         key: {
