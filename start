@@ -1,15 +1,17 @@
 #!/bin/bash
 
 SCRIPTS=(
+  "translate.py"
   "json-to-excel.py"
   "excel-to-json.py"
   "flatten-json.py"
 )
 
 SCRIPT_LABELS=(
-  "Compare and export translations (json-to-excel)"
-  "Import edited Excel and update translations (excel-to-json)"
-  "Flatten nested JSON (flatten-json)"
+  "Translate JSON files using DeepL (translate.py)"
+  "Compare and export translations (json-to-excel.py)"
+  "Import edited Excel and update translations (excel-to-json.py)"
+  "Flatten nested JSON (flatten-json.py)"
 )
 
 # Step 0: Ensure .env exists

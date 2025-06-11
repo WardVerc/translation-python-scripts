@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Step 0: Ensure .env exists
+if [ ! -f .env ]; then
+  echo "❌ .env file not found!"
+  echo "Please create a .env file with your DeepL key:"
+  echo "DEEPL_FREE_SECRET=your-api-key"
+  exit 1
+fi
+
+# Step 1: Set up virtualenv if missing
+if [ ! -d .venv ]; then
+  echo "🐍 Creating virtual environment..."
+  python3 -m venv .venv
+fi
+
+# Step 2: Activate and install dependencies
+source .venv/bin/activate
+pip3 install --quiet -r requirements.txt
+
+clear
+echo "👋 Hi! I have a few scripts ready for you. Choose a script and I will set it up for you!"
+echo
+
+# Step 3: Start translation
+echo "🚀 Launching script: translate.py"
+echo
+.venv/bin/python "translate.py"
+
+echo
