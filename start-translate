@@ -15,8 +15,7 @@ if [ ! -d .venv ]; then
 fi
 
 # Step 2: Activate and install dependencies
-source .venv/bin/activate
-pip3 install --quiet -r requirements.txt
+.venv/bin/python -m pip install --quiet -r requirements.txt
 
 clear
 echo "👋 Hi! I have a few scripts ready for you. Choose a script and I will set it up for you!"

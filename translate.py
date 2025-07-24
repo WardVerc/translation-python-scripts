@@ -3,12 +3,12 @@ import requests
 import os
 from openpyxl import load_workbook, Workbook
 from datetime import datetime
-from dotenv import load_dotenv
 import re
 
 # Load environment variables (DEEPL API key)
-load_dotenv()
-DEEPL_API_KEY = os.getenv("DEEPL_FREE_SECRET")
+from dotenv import dotenv_values
+env_vars = dotenv_values(".env")
+DEEPL_API_KEY = env_vars.get("DEEPL_FREE_SECRET")
 
 # --- HARDCODED PATHS ---
 EXCEL_OLD_TRANSLATIONS = "/Users/wardvercruyssen/Downloads/translations.xlsx"
