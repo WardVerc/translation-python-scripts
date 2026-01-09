@@ -25,30 +25,27 @@ https://nodejs.org/en/download
 Install dependencies
 
 ```bash
-npm install fs/promises
-npm install dotenv
-npm install axios
-npm install path
-npm install readline
-npm install exceljs
+npm install
 ```
+
+Add a word or sentence in the en.json you want to translate (I've added an example already).
 
 Run the translation script:
 
 ```bash
-node translate.js
+npm run translate
 ```
 
 To export translations to an Excel:
 
 ```bash
-node export-translations-to-excel.js
+npm run export
 ```
 
 To import translations from an Excel:
 
 ```bash
-node import-excel-to-jsons.js
+npn run import
 ```
 
 ---
