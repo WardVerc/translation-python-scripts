@@ -58,7 +58,7 @@ while true; do
 
   # Custom prompt for json-to-excel
   if [[ "$selected_script" == "json-to-excel.py" ]]; then
-    echo -n "📄 Is the existing Excel file still 'translations.xlsx' in your Downloads folder? (y/n): "
+    echo -n "📄 Is the existing Excel file still 'translations.xlsx' in your folder? (y/n): "
     read confirm
     if [[ "$confirm" != "y" ]]; then
       echo "🛑 Please update the script paths before running. Exiting."

@@ -11,22 +11,14 @@ env_vars = dotenv_values(".env")
 DEEPL_API_KEY = env_vars.get("DEEPL_FREE_SECRET")
 
 # --- HARDCODED PATHS ---
-EXCEL_OLD_TRANSLATIONS = "/Users/wardvercruyssen/Downloads/translations.xlsx"
+EXCEL_OLD_TRANSLATIONS = "./translations.xlsx"
 TRANSLATION_SETS = {
     "1": {
-        "label": "MobilityPlus Portal",
+        "label": "Translation",
         "paths": {
-            "EN": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/en.json",
-            "FR": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/fr.json",
-            "NL": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/nl.json",
-        },
-    },
-    "2": {
-        "label": "Synkee Portal",
-        "paths": {
-            "EN": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/en.json",
-            "FR": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/fr.json",
-            "NL": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/nl.json",
+            "EN": "./en.json",
+            "FR": "./fr.json",
+            "NL": "./nl.json",
         },
     },
 }

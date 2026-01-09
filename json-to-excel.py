@@ -11,24 +11,16 @@ load_dotenv()
 DEEPL_API_KEY = os.getenv("DEEPL_FREE_SECRET")
 
 # --- HARDCODED PATHS ---
-EXCEL_OLD_TRANSLATIONS = "/Users/wardvercruyssen/Downloads/translations.xlsx"
+EXCEL_OLD_TRANSLATIONS = "./translations.xlsx"
 TRANSLATION_SETS = {
     "1": {
-        "label": "MobilityPlus Portal",
+        "label": "Translation",
         "paths": {
-            "EN": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/en.json",
-            "FR": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/fr.json",
-            "NL": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/nl.json",
+            "EN": "./en.json",
+            "FR": "./fr.json",
+            "NL": "./nl.json",
         },
-    },
-    "2": {
-        "label": "Synkee Portal",
-        "paths": {
-            "EN": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/en.json",
-            "FR": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/fr.json",
-            "NL": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/nl.json",
-        },
-    },
+    }
 }
 
 # --- HELPER FUNCTIONS ---
@@ -212,8 +204,8 @@ def main():
 
     # Step 7: Export Excel files
     ts = timestamp()
-    write_excel(new_keys_only, f"/Users/wardvercruyssen/Downloads/new-keys-ONLY-{ts}.xlsx", "New Keys Only")
-    write_excel(full_translation_set, f"/Users/wardvercruyssen/Downloads/all-keys-MERGED-{ts}.xlsx", "All Keys Merged")
+    write_excel(new_keys_only, f"./new-keys-ONLY-{ts}.xlsx", "New Keys Only")
+    write_excel(full_translation_set, f"./all-keys-MERGED-{ts}.xlsx", "All Keys Merged")
 
     print("🎉 Done!")
 

@@ -8,24 +8,16 @@ from datetime import datetime
 load_dotenv()
 
 # --- HARDCODED PATHS ---
-EXCEL_REVIEWED_PATH = "/Users/wardvercruyssen/Downloads/translations-reviewed.xlsx"
+EXCEL_REVIEWED_PATH = "./translations-reviewed.xlsx"
 TRANSLATION_SETS = {
     "1": {
-        "label": "MobilityPlus Portal",
+        "label": "Translation",
         "paths": {
-            "EN": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/en.json",
-            "FR": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/fr.json",
-            "NL": "/Users/wardvercruyssen/repos/react_dashboard/src/i18n/nl.json",
+            "EN": "./en.json",
+            "FR": "./fr.json",
+            "NL": "./nl.json",
         },
-    },
-    "2": {
-        "label": "Synkee Portal",
-        "paths": {
-            "EN": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/en.json",
-            "FR": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/fr.json",
-            "NL": "/Users/wardvercruyssen/repos/synkee_portal/src/i18n/nl.json",
-        },
-    },
+    }
 }
 
 # --- HELPER FUNCTIONS ---
@@ -133,7 +125,7 @@ def main():
         }
         for key in all_keys
     }
-    write_excel(full_export, f"/Users/wardvercruyssen/Downloads/all-keys-MERGED-{timestamp()}.xlsx", "All Keys Merged")
+    write_excel(full_export, f"./all-keys-MERGED-{timestamp()}.xlsx", "All Keys Merged")
 
     print("\n🎉 Import completed!")
 
