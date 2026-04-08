@@ -1,8 +1,8 @@
-# 🌍 Translator
+# i18n - Translator
 
 A small toolkit to manage JSON translation files. Designed to auto-translate, export, validate and import translations in multiple languages (EN -> FR, NL) with DeepL API.
 
-## 🚀 Quick Start
+## Quick Start
 
 Create a `.env` file with your DeepL API key:
 
